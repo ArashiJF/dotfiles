@@ -1,0 +1,7 @@
+[user]
+	name = Arashi
+	email = 13753619+ArashiJF@users.noreply.github.com 
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
