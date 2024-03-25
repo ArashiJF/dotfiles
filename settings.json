@@ -1,0 +1,15 @@
+{
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
+    "editor.fontFamily": "'FiraCode Nerd Font', 'monospace', monospace",
+    "workbench.settings.applyToAllProfiles": [
+        "editor.fontFamily",
+        "github.gitAuthentication",
+        "editor.lineNumbers"
+    ],
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "git.autofetch": true,
+    "editor.lineNumbers": "relative"
+}
