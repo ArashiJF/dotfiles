@@ -21,6 +21,9 @@ codium --install-extension catppuccin.catppuccin-vsc-pack
 # NVIM motions
 codium --install-extension asvetliakov.vscode-neovim
 
+# Install Kitty
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+
 if [ "$(uname -s)" = "Linux" ]; then
     # Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
     # your system-wide PATH)

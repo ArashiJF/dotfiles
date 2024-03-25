@@ -6,7 +6,10 @@ The install sh will install most of the utilities needed that the other programs
 ./install.sh
 ```
 
-After the install script is done, you will need to open an new terminal session. Afterwards, execute:
+After install is done, logout to ensure everything is started properly.
+
+When you open the terminal again you would see zsh getting started. Then you should execute initialize to add kitty, set up codium configs and extensions.
+
 
 ```
 ./initialize.sh
