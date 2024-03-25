@@ -24,3 +24,6 @@ sudo chsh -s $(which zsh) $USER
 git clone git@github.com:ryanoasis/nerd-fonts.git --depth=1 ~/nerd-fonts
 cd ~/nerd-fonts; ./install.sh
 rm -rf ~/nerd-fonts
+
+# Install Kitty
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
