@@ -11,7 +11,8 @@ nix-env -iA \
 	nixpkgs.neovim \
 	nixpkgs.bat \
 	nixpkgs.antidote \
-	nixpkgs.chezmoi
+	nixpkgs.chezmoi \
+	nixpkgs.vscodium
 
 # add zsh to valid login shells
 command -v zsh | sudo tee -a /etc/shells
