@@ -32,6 +32,9 @@ alias dotfiles-update="chezmoi -v apply"
 alias tomine="cd ~/Documents/workspace/github.com"
 alias togreen="cd ~/Documents/workspace/greenapps"
 
+# Kitty
+export PATH=$PATH:~/.local/kitty.app/bin
+
 # Pyenv set up
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"

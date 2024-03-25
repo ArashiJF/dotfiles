@@ -1,2 +1,8 @@
 # https://www.chezmoi.io/user-guide/manage-different-types-of-file/#manage-a-files-permissions-but-not-its-contents
 settings.json
+
+# Scripts and readmes shouldnt be synced to Home
+README.md
+initialize.sh
+install.sh
+pull-fonts.sh

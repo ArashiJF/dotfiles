@@ -20,3 +20,6 @@ command -v zsh | sudo tee -a /etc/shells
 # use zsh as default shell
 sudo chsh -s $(which zsh) $USER
 
+# Pull down and initialize chezmoi to have all conf files ready
+chezmoi init --apply --verbose https://github.com/ArashiJF/dotfiles.git
+
