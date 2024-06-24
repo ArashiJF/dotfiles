@@ -16,6 +16,8 @@ curl https://pyenv.run | zsh
 codium --install-extension mhutchie.git-graph
 # Prettier
 codium --install-extension esbenp.prettier-vscode
+# Pretty TS errors
+codium --install-extension yoavbls.pretty-ts-errors
 # Eslint
 codium --install-extension dbaeumer.vscode-eslint
 # Python tools
@@ -26,8 +28,6 @@ codium --install-extension golang.go
 codium --install-extension catppuccin.catppuccin-vsc-pack
 # Srcery theme
 codium --install-extension srcery-colors.srcery-colors
-# NVIM motions
-codium --install-extension asvetliakov.vscode-neovim
 
 # Install Kitty
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
