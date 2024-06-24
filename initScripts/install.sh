@@ -27,4 +27,4 @@ sudo apt update && sudo apt -y --ignore-missing install codium
 command -v zsh | sudo tee -a /etc/shells
 
 # use zsh as default shell
-sudo chsh -s $(which zsh) $USER
+chsh -s $(which zsh) $(whoami)
