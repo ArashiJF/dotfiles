@@ -1,28 +1,23 @@
 ## GOOD OLD APT-GET AM I RIGHT??!?!
 
-brew looking mad interesting rn
+brew on linux looking mad interesting rn
 
-## Zsh plugins
+# Tools
 
-- lukechilds/zsh-nvm
-- robbyrussell/oh-my-zsh path:plugins/colored-man-pages
-- robbyrussell/oh-my-zsh path:plugins/command-not-found
-- romkatv/powerlevel10k
-- zsh-users/zsh-autosuggestions
-- zsh-users/zsh-completions
-- zsh-users/zsh-syntax-highlighting
-
-# IDE
-
-- VScodium - Handled by install.sh, plugins added by initialize.sh
+- Codium with the necessary extensions added
+- NVM for node
+- Pyenv for python
+- Go for Go
 
 # Terminal
 
-- Kitty - [Binary install](https://sw.kovidgoyal.net/kitty/binary/#desktop-integration-on-linux)
+- Didn't see the point with kitty, added more configs
+- gnome terminal is fine, iterm on mac is fine but I don't really use terminal extensively besides running specific commands or utils.
+- Let's try again integrated vscode terminal, surely 6 years later it should be better now and wouldn't hang and crash with angular/react like before.
 
-# Languajes
+# Dotfile management
 
-- Python - Handled by initialize.sh
-- Node - Handled by zsh-nvm
-- Go - [Install](https://go.dev/doc/install)
-  - PATH set up in .zshrc
+Chezmoi borked a lot for me so just gonna use bash and symlinks
+
+- [Reference](https://freddiecarthy.com/blog/make-your-dotfiles-portable-with-git-and-a-simple-bash-script)
+

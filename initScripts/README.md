@@ -1,12 +1,14 @@
-# Bootstrap
+# Initialization steps
 
-The install sh will install most of the utilities needed that the other programs depend on:
+- Install sh adds base dependencies codium, go, nvm and pyenv
 
 ```
 ./install.sh
 ```
 
-Should restart terminal now at this point after nvm and others are added. Then run initialize.
+- Restart terminal to get latest changes.
+
+- Initialize adds codium plugins and other miscelaneus stuff to configure/customize the tools.
 
 ```
 ./initialize.sh
