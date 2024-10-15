@@ -25,11 +25,17 @@ Chezmoi borked a lot for me so just gonna use bash and symlinks
 
 - Assuming we have curl we can download the repo directly to the machine and run the install script from the get go
 ```
-bash -c "$(curl -#fL raw.githubusercontent.com/ArashiJF/dotfiles/main/install)"
+bash -c "$(curl -#fL https://raw.githubusercontent.com/ArashiJF/dotfiles/refs/heads/main/install)"
 ```
 
-- Initialize adds codium plugins and other miscelaneus stuff to configure/customize the tools.
+- Initialize in the project root adds codium plugins and other miscelaneus stuff to configure/customize the tools.
 
 ```
-bash ./initialize.sh
+bash code-extensions
+```
+
+- Pull fonts adds the fonts used for terminal customization
+
+```
+bash pull-fonts
 ```

@@ -95,10 +95,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# nvm set up
-NVM_DIR=${HOME}/.nvm
-NVM_COMPLETION=true
-
 # Pyenv set up
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
