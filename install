@@ -1,0 +1,201 @@
+#!/usr/bin/env bash
+LOG="~/dotfiles.log"
+GITHUB_USER=ArashiJF
+GITHUB_REPO=dotfiles
+DIR="~/Documents/workspace/github.com/${GITHUB_REPO}"
+
+_process() {
+  echo "$(date) PROCESSING:  $@" >> $LOG
+  printf "$(tput setaf 6) %s...$(tput sgr0)\n" "$@"
+}
+
+_success() {
+  local message=$1
+  printf "%s✓ Success:%s\n" "$(tput setaf 2)" "$(tput sgr0) $message"
+}
+
+_warning() {
+  echo "$(date) WARNING:  $@" >> $LOG
+  printf "$(tput setaf 3)⚠ Warning:$(tput sgr0) %s!\n" "$@"
+}
+
+# Need to download the repo as a binary initially if no git is installed
+download_dotfiles() {
+  _process "→ Creating directory at ${DIR} and setting permissions"
+  mkdir -p "${DIR}"
+
+  _process "→ Downloading repository to /tmp directory"
+  curl -#fLo /tmp/${GITHUB_REPO}.tar.gz "https://github.com/${GITHUB_USER}/${GITHUB_REPO}/tarball/main"
+
+  _process "→ Extracting files to ${DIR}"
+  tar -zxf /tmp/${GITHUB_REPO}.tar.gz --strip-components 1 -C "${DIR}"
+
+  _process "→ Removing tarball from /tmp directory"
+  rm -rf /tmp/${GITHUB_REPO}.tar.gz
+
+  [[ $? ]] && _success "${DIR} created, repository downloaded and extracted"
+
+  # Change to the dotfiles directory
+  cd "${DIR}"
+}
+
+link_dotfiles() {
+  # symlink files to the HOME directory.
+  if [[ -f "${DIR}/opt/files" ]]; then
+    _process "→ Symlinking dotfiles in /configs"
+
+    # Set variable for list of files
+    files="${DIR}/opt/files"
+
+    # Store IFS separator within a temp variable
+    OIFS=$IFS
+    # Set the separator to a carriage return & a new line break
+    # read in passed-in file and store as an array
+    IFS=$'\r\n'
+    links=($(cat "${files}"))
+
+    # Loop through array of files
+    for index in ${!links[*]}
+    do
+      for link in ${links[$index]}
+      do
+        _process "→ Linking ${links[$index]}"
+        # set IFS back to space to split string on
+        IFS=$' '
+        # create an array of line items
+        file=(${links[$index]})
+        # Create symbolic link
+        ln -fs "${DIR}/${file[0]}" "~/${file[1]}"
+      done
+      # set separater back to carriage return & new line break
+      IFS=$'\r\n'
+    done
+
+    # Reset IFS back
+    IFS=$OIFS
+
+    source "$~/.bashrc"
+
+    [[ $? ]] && _success "All files have been copied"
+  fi
+}
+
+install_base_utils() {
+  sudo apt update
+  sudo apt -y --ignore-missing install $(< packages.list)
+
+  [[ $? ]] && _success "Base dependencies added"
+}
+
+install_vscodium() {
+  # add vscodium deb ppa
+  _process "Adding VSCodium"
+  wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
+      | gpg --dearmor \
+      | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
+
+  echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
+      | sudo tee /etc/apt/sources.list.d/vscodium.list
+
+  sudo apt update && sudo apt -y --ignore-missing install codium
+
+  [[ $? ]] && _success "Codium installed"
+}
+
+install_nvm() {
+  _process "Adding NVM"
+  if [ -e ~/.nvm ]; then
+    # https://github.com/nvm-sh/nvm?tab=readme-ov-file#uninstalling--removal
+    _process "nvm install found, removing first"
+    nvm_dir="${NVM_DIR:-~/.nvm}"
+    nvm unload
+    rm -rf "$nvm_dir"
+  fi
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+  [[ $? ]] && _success "nvm installed"
+}
+
+install_go() {
+  # GO
+  _process "Adding GO"
+  if [ -e /usr/local/go ]; then
+    _process "Go install found, removing first"
+    rm -rf /usr/local/go
+  fi
+  # latest version
+  goVersion="$(curl --silent "https://go.dev/VERSION?m=text")"
+
+  # checks architecture
+  lscpu | grep ARM 1>/dev/null && ARCH=arm64 || ARCH=amd64
+
+  # downloads latest binary for that arch
+  curl -O https://go.dev/dl/${goVersion}.linux-${ARCH}.tar.gz
+
+  # adds it to usr local
+  tar -C /usr/local -xzf ${goVersion}.linux-${ARCH}.tar.gz
+
+  # Remove downloaded binary after it has been extracted
+  rm ${goVersion}.linux-${ARCH}.tar.gz
+
+  [[ $? ]] && _success "Go installed"
+}
+
+install_pyenv() {
+  # Install pyenv
+  _process "Adding Pyenv"
+  # Added here as this is when we have the bash terminal initialized
+  if [ -e ~/.pyenv ]; then
+    _process "pyenv install printffound, removing first"
+    rm -rf ~/.pyenv
+  fi
+
+  # Add the system dependencies for pyenv
+  sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
+  libbz2-dev libreadline-dev libsqlite3-dev curl \
+  libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+  curl https://pyenv.run | bash
+
+  [[ $? ]] && _success "Pyenv installed"
+}
+
+setup_git_authorship() {
+  GIT_AUTHOR_NAME=eval "git config user.name"
+  GIT_AUTHOR_EMAIL=eval "git config user.email"
+
+  if [[ ! -z "$GIT_AUTHOR_NAME" ]]; then
+    _process "→ Setting up Git author"
+
+    read USER_GIT_AUTHOR_NAME
+    if [[ ! -z "$USER_GIT_AUTHOR_NAME" ]]; then
+      GIT_AUTHOR_NAME="${USER_GIT_AUTHOR_NAME}"
+      $(git config --global user.name "$GIT_AUTHOR_NAME")
+    else
+      _warning "No Git user name has been set.  Please update manually"
+    fi
+
+    read USER_GIT_AUTHOR_EMAIL
+    if [[ ! -z "$USER_GIT_AUTHOR_EMAIL" ]]; then
+      GIT_AUTHOR_EMAIL="${USER_GIT_AUTHOR_EMAIL}"
+      $(git config --global user.email "$GIT_AUTHOR_EMAIL")
+    else
+      _warning "No Git user email has been set.  Please update manually"
+    fi
+  else
+    _process "→ Git author already set, moving on..."
+  fi
+}
+
+install() {
+  download_dotfiles
+  link_dotfiles
+  install_base_utils
+  install_vscodium
+  install_nvm
+  install_go
+  install_pyenv
+  setup_git_authorship
+}
+
+install

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Fonts to pull from nerd-font
+mkdir -p ~/.local/share/fonts
+
+# in case it already existed
+rm -rf ~/.local/share/fonts/*
+
+cd ~/.local/share/fonts
+
+# font symbols
+curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFontMono-Regular.ttf
+
+# intel one mono font
+curl -fLO https://github.com/intel/intel-one-mono/releases/download/V1.4.0/ttf.zip
+unzip ttf.zip
+mv ./ttf/* .
+
+rm ttf.zip
+rm -rf ./ttf
