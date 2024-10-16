@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+source ./init_scripts
+
+install() {
+  download_dotfiles
+  install_base_utils
+  install_vscodium
+  install_nvm
+  install_go
+  install_pyenv
+  link_dotfiles
+  setup_git_authorship
+}
+
+install

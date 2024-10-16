@@ -102,6 +102,15 @@ install_vscodium() {
   [[ $? ]] && _success "Codium installed"
 }
 
+install_ohmyposh() {
+  curl -s https://ohmyposh.dev/install.sh | bash -s
+
+  # Add dir where configs are going to live
+  mkdir -p "${HOME}/oh-my-posh"
+
+  [[ $? ]] && _success "oh-my-posh installed"
+}
+
 install_nvm() {
   _process "Adding NVM"
   if [ -e ~/.nvm ]; then
@@ -138,7 +147,6 @@ install_go() {
   # Remove downloaded binary after it has been extracted
   rm ${goVersion}.linux-${ARCH}.tar.gz
 
-  go version
   [[ $? ]] && _success "Go installed"
 }
 
@@ -187,16 +195,3 @@ setup_git_authorship() {
     _process "→ Git author already set, moving on..."
   fi
 }
-
-install() {
-  download_dotfiles
-  install_base_utils
-  link_dotfiles
-  install_vscodium
-  install_nvm
-  install_go
-  install_pyenv
-  setup_git_authorship
-}
-
-install

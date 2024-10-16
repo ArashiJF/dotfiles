@@ -12,9 +12,7 @@ cd ~/.local/share/fonts
 curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFontMono-Regular.ttf
 
 # intel one mono font
-curl -fLO https://github.com/intel/intel-one-mono/releases/download/V1.4.0/ttf.zip
-unzip ttf.zip
-mv ./ttf/* .
+curl -fLO https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/IntelOneMono.zip
+unzip IntelOneMono.zip -d IntelOneMono
 
-rm ttf.zip
-rm -rf ./ttf
+rm IntelOneMono.zip

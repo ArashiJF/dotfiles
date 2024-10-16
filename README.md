@@ -25,7 +25,7 @@ Chezmoi borked a lot for me so just gonna use bash and symlinks
 
 - Assuming we have curl we can download the repo directly to the machine and run the install script from the get go
 ```
-bash -c "$(curl -#fL https://raw.githubusercontent.com/ArashiJF/dotfiles/refs/heads/main/install)"
+bash -c "$(curl -#fL https://raw.githubusercontent.com/ArashiJF/dotfiles/refs/heads/main/bootstrap_all)"
 ```
 
 - Initialize in the project root adds codium plugins and other miscelaneus stuff to configure/customize the tools.
@@ -38,4 +38,12 @@ bash code-extensions
 
 ```
 bash pull-fonts
+```
+
+# Testing
+
+- All the installation scripts are in the init_scripts file, if you need to test or trigger a specific func after the fact you can use
+
+```
+source ./init_scripts; <func name>
 ```
