@@ -105,9 +105,6 @@ install_vscodium() {
 install_ohmyposh() {
   curl -s https://ohmyposh.dev/install.sh | bash -s
 
-  # Add dir where configs are going to live
-  mkdir -p "${HOME}/oh-my-posh"
-
   [[ $? ]] && _success "oh-my-posh installed"
 }
 

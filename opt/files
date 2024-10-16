@@ -2,4 +2,3 @@ configs/.gitconfig .gitconfig
 configs/.gitignore .gitignore
 configs/.bashrc .bashrc
 configs/.bash_aliases .bash_aliases
-configs/oh-my-posh/themes/tokyo.json oh-my-posh/tokyo.json

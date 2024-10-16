@@ -96,6 +96,8 @@ if ! shopt -oq posix; then
 fi
 
 # Pyenv set up
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
@@ -109,5 +111,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# oh my posh tokyo
-eval "$(oh-my-posh init bash --config ~/oh-my-posh/tokyo.json)"
+# oh my posh
+eval "$(oh-my-posh init bash --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/di4am0nd.omp.json)"
