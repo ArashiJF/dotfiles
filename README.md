@@ -4,7 +4,7 @@ brew on linux looking mad interesting rn
 
 # Tools
 
-- Codium with the necessary extensions added
+- Codium
 - NVM for node
 - Pyenv for python
 - Go for Go
@@ -24,14 +24,15 @@ Chezmoi borked a lot for me so just gonna use bash and symlinks
 # Initialization steps
 
 - Assuming we have curl we can download the repo directly to the machine and run the install script from the get go
-```
-bash -c "$(curl -#fL https://raw.githubusercontent.com/ArashiJF/dotfiles/refs/heads/main/bootstrap_all)"
-```
-
-- Initialize in the project root adds codium plugins and other miscelaneus stuff to configure/customize the tools.
 
 ```
-bash code-extensions
+bash -c "$(curl -#fL https://raw.githubusercontent.com/ArashiJF/dotfiles/refs/heads/main/pull-dotfiles)"
+```
+
+- Previous script will leave you at the dotfiles root, execute
+
+```
+bash bootstrap_all
 ```
 
 - Pull fonts adds the fonts used for terminal customization
@@ -39,6 +40,10 @@ bash code-extensions
 ```
 bash pull-fonts
 ```
+
+- Import the base profile to vscode/codium with the profile importer in settings > profiles
+
+- Set the font in the external terminal app to the intel one downloaded by pull-fonts
 
 # Testing
 
