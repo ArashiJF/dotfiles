@@ -45,6 +45,16 @@ bash pull-fonts
 
 - Set the font in the external terminal app to the intel one downloaded by pull-fonts
 
+# Updating deps
+- Refer to the init_scripts case statement at bottom to see which functions can be called with:
+```
+./init_scripts <func name>
+```
+- pyenv has a command for updates
+```
+pyenv update
+```
+
 # Testing
 
 - All the installation scripts are in the init_scripts file, if you need to test or trigger a specific func after the fact you can use

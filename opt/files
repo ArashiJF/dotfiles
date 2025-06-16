@@ -1,4 +1,4 @@
 configs/.gitconfig .gitconfig
 configs/.gitignore .gitignore
-configs/.bashrc .bashrc
 configs/.bash_aliases .bash_aliases
+configs/.bashrc .bashrc

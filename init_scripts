@@ -80,7 +80,7 @@ install_nvm() {
     nvm unload
     rm -rf "$nvm_dir"
   fi
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
   [[ $? ]] && _success "nvm installed"
 }
@@ -155,3 +155,14 @@ setup_git_authorship() {
     _process "→ Git author already set, moving on..."
   fi
 }
+
+# Some functions are useful to call by themselves
+case "$1" in
+    "") ;;
+    install_base_utils) "$@"; exit;;
+    link_dotfiles) "$@"; exit;;
+    install_nvm) "$@"; exit;;
+    install_go) "$@"; exit;;
+    install_ohmyposh) "$@"; exit;;
+    *) log_error "Unkown function: $1()"; exit 2;;
+esac
