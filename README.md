@@ -1,13 +1,8 @@
-## GOOD OLD APT-GET AM I RIGHT??!?!
-
-brew on linux looking mad interesting rn
-
 # Tools
 
-- Codium
 - NVM for node
 - Pyenv for python
-- Go for Go
+- Go
 
 # Terminal
 
@@ -17,8 +12,6 @@ brew on linux looking mad interesting rn
 
 # Dotfile management
 
-Chezmoi borked a lot for me so just gonna use bash and symlinks
-
 - [Reference](https://freddiecarthy.com/blog/make-your-dotfiles-portable-with-git-and-a-simple-bash-script)
 
 # Initialization steps
@@ -26,7 +19,7 @@ Chezmoi borked a lot for me so just gonna use bash and symlinks
 - Assuming we have curl we can download the repo directly to the machine and run the install script from the get go
 
 ```
-bash -c "$(curl -#fL https://raw.githubusercontent.com/ArashiJF/dotfiles/refs/heads/main/pull-dotfiles)"
+bash -c "$(curl -#fL https://raw.githubusercontent.com/ArashiJF/dotfiles/refs/heads/main/utils)"
 ```
 
 - Previous script will leave you at the dotfiles root, execute

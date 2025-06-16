@@ -3,14 +3,13 @@
 source ./init_scripts
 
 install() {
-  install_base_utils
-  install_ohmyposh
-  install_vscodium
-  install_nvm
-  install_go
-  install_pyenv
-  link_dotfiles
-  setup_git_authorship
+    install_base_utils
+    install_ohmyposh
+    install_nvm
+    install_go
+    install_pyenv
+    link_dotfiles
+    setup_git_authorship
 }
 
 install
