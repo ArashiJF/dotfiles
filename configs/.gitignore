@@ -1,1 +1,4 @@
 bin
+
+# using mise in local projects if needed
+mise.local.toml 

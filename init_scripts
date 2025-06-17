@@ -6,6 +6,52 @@ distro=$(detect_distro)
 
 _process "Detected distro $distro"
 
+# Packages from package list
+install_base_utils() {
+    _process "Adding base packages"
+
+    if [[ $distro == "Debian" ]]; then
+        sudo apt update
+        sudo apt -y --ignore-missing install $(<"${DIR}/opt/packages.list")
+    elif [[ $distro == "Arch" ]]; then
+        sudo pacman -S --needed base-devel $(<"${DIR}/opt/packages.list")
+    elif [[ $distro == "Unknown" ]]; then
+        _warning "Unrecognized distro"
+        return
+    fi
+    [[ $? ]] && _success "Base dependencies added"
+}
+
+install_mise() {
+    _process "Adding mise"
+    curl https://mise.run | sh
+
+    [[ $? ]] && _success "mise installed"
+
+    _process "Adding bash completions"
+
+    mise use -g usage
+    mkdir -p ~/.local/share/bash-completion/completions
+    mise completion bash --include-bash-completion-lib >~/.local/share/bash-completion/completions/mise
+
+    [[ $? ]] && _success "mise completions added"
+}
+
+install_mise_tools() {
+    _process "Adding global devtools with mise"
+
+    mise use --global $(<"${DIR}/opt/mise.list")
+
+    [[ $? ]] && _success "tools added"
+}
+
+install_ohmyposh() {
+    _process "Add oh-my-posh prompt"
+    curl -s https://ohmyposh.dev/install.sh | bash -s
+
+    [[ $? ]] && _success "oh-my-posh installed"
+}
+
 link_dotfiles() {
     # symlink files to the HOME directory.
     if [[ -f "${DIR}/opt/files" ]]; then
@@ -42,80 +88,9 @@ link_dotfiles() {
         source "${HOME}/.bashrc"
 
         [[ $? ]] && _success "All files have been copied"
+    else
+        _warning "No files list found in ./opt/files"
     fi
-}
-
-# Packages from package list and pyenv dependencies according to distro
-install_base_utils() {
-    if [[ $distro == "Debian" ]]; then
-        sudo apt update
-        sudo apt -y --ignore-missing install build-essential libssl-dev zlib1g-dev \
-            libbz2-dev libreadline-dev libsqlite3-dev libncursesw5-dev xz-utils \
-            tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-            $(<"${DIR}/opt/packages.list")
-    elif [[ $distro == "Arch" ]]; then
-        sudo pacman -S --needed base-devel pacman openssl zlib xz tk $(<"${DIR}/opt/packages.list")
-    fi
-
-    [[ $? ]] && _success "Base dependencies added"
-}
-
-install_ohmyposh() {
-    curl -s https://ohmyposh.dev/install.sh | bash -s
-
-    [[ $? ]] && _success "oh-my-posh installed"
-}
-
-install_nvm() {
-    _process "Adding NVM"
-    if [ -e ~/.nvm ]; then
-        # https://github.com/nvm-sh/nvm?tab=readme-ov-file#uninstalling--removal
-        _process "nvm install found, removing first"
-        nvm_dir="${NVM_DIR:-~/.nvm}"
-        nvm unload
-        rm -rf "$nvm_dir"
-    fi
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-
-    [[ $? ]] && _success "nvm installed"
-}
-
-install_go() {
-    # GO
-    _process "Adding GO"
-    if [ -e /usr/local/go ]; then
-        _process "Go install found, removing first"
-        sudo rm -rf /usr/local/go
-    fi
-    # latest version
-    goVersion="$(curl --silent 'https://go.dev/VERSION?m=text' | awk 'NR==1')"
-
-    # checks architecture
-    lscpu | grep ARM 1>/dev/null && ARCH=arm64 || ARCH=amd64
-
-    # downloads latest binary for that arch
-    curl -O https://dl.google.com/go/${goVersion}.linux-${ARCH}.tar.gz
-
-    # adds it to usr local
-    sudo tar -C /usr/local -xzf ${goVersion}.linux-${ARCH}.tar.gz
-
-    # Remove downloaded binary after it has been extracted
-    rm ${goVersion}.linux-${ARCH}.tar.gz
-
-    [[ $? ]] && _success "Go installed"
-}
-
-install_pyenv() {
-    # Install pyenv
-    _process "Adding Pyenv"
-    if [ -e ~/.pyenv ]; then
-        _process "pyenv install found, removing first"
-        rm -rf ~/.pyenv
-    fi
-
-    curl https://pyenv.run | bash
-
-    [[ $? ]] && _success "Pyenv installed"
 }
 
 setup_git_authorship() {
@@ -145,6 +120,14 @@ setup_git_authorship() {
     fi
 }
 
+setup_git_ignore() {
+    _process "Setting global git ignore"
+
+    $(git config --global core.excludesFile ~/.gitignore)
+
+    [[ $? ]] && _success "Global git ignore set"
+}
+
 # Some functions are useful to call by themselves
 case "$1" in
 "") ;;
@@ -152,15 +135,15 @@ install_base_utils)
     "$@"
     exit
     ;;
+install_mise)
+    "$@"
+    exit
+    ;;
+install_mise_tools)
+    "$@"
+    exit
+    ;;
 link_dotfiles)
-    "$@"
-    exit
-    ;;
-install_nvm)
-    "$@"
-    exit
-    ;;
-install_go)
     "$@"
     exit
     ;;

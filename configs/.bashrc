@@ -34,24 +34,11 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# Golang added to Path
-PATH=$PATH:/usr/local/go/bin
-PATH=$PATH:$HOME/go/bin
-
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Pyenv set up
-# https://github.com/pyenv/pyenv?tab=readme-ov-file#bash
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && PATH="$PYENV_ROOT/bin:$PATH"
-
 export PATH
 
-# pyenv init
-eval "$(pyenv init - bash)"
-
-# oh my posh
+# oh my posh with diamond theme
 eval "$(oh-my-posh init bash --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/di4am0nd.omp.json)"
+
+eval "$(~/.local/bin/mise activate bash)"
+
+eval "$(zoxide init bash)"

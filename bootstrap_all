@@ -4,12 +4,12 @@ source ./init_scripts
 
 install() {
     install_base_utils
+    install_mise
+    install_mise_tools
     install_ohmyposh
-    install_nvm
-    install_go
-    install_pyenv
     link_dotfiles
     setup_git_authorship
+    setup_git_ignore
 }
 
 install
