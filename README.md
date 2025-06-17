@@ -1,14 +1,14 @@
 # Tools
 
-- NVM for node
-- Pyenv for python
-- Go
+- [mise](https://mise.jdx.dev/)
+- various bash scripts to automate initial setup
 
 # Terminal
 
-- Didn't see the point with kitty, added more configs
-- gnome terminal is fine, iterm on mac is fine but I don't really use terminal extensively besides running specific commands or utils.
-- Let's try again integrated vscode terminal, surely 6 years later it should be better now and wouldn't hang and crash with angular/react like before.
+- whatever the distro has.
+- whatever the IDE has.
+
+oh-my-posh makes it pretty
 
 # Dotfile management
 
@@ -39,14 +39,12 @@ bash pull-fonts
 - Set the font in the external terminal app to the intel one downloaded by pull-fonts
 
 # Updating deps
+
 - Refer to the init_scripts case statement at bottom to see which functions can be called with:
 ```
 ./init_scripts <func name>
 ```
-- pyenv has a command for updates
-```
-pyenv update
-```
+- mise has upgrade command [reference](https://mise.jdx.dev/cli/)
 
 # Testing
 
